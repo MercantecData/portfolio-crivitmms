@@ -1,8 +1,13 @@
-i dette forløb vil jeg lave en todo app.
+i dette forlÃ¸b vil jeg lave en todo app.
 appen skal bliver lavet med flutter.
 i appen skal man kunne oprette todo-elementer.
 disse elementer skal indeholde en beskrivelse.
 man skal kunne redigere i elementerne og slette dem.
-samt skal der være mulighed for at sætte et element som færdig.
+samt skal der vÃ¦re mulighed for at sÃ¦tte et element som fÃ¦rdig.
+
+knap til side med oprettelse af todo
+(oprettelsesside) text input til navn og bbeskrivelse af todo 
+dynamisk scroll liste med todo-elementerne
+side til redegering af todo-elementerne lignede oprettelsessiden
 
 
