@@ -54,35 +54,44 @@ class _OpretTodo extends State{
         child: Column(
           children: <Widget>[
             fejlBeskedWidget(),
-            TextField(
-              controller: titelControl,
-              decoration: InputDecoration(
-                labelText: 'Titel',
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(25)
-                )
-              ),
-            ),
-            TextField(
-              controller: beskrivelsesControl,
-              maxLines: null,
-              keyboardType: TextInputType.multiline,
-              decoration: InputDecoration(
-                labelText: 'Beskrivelse',
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(25)
-                )
-              ),
-            ),
-            ButtonTheme(
-              minWidth: double.infinity,
-              height: 50,
-              child: RaisedButton(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(25))
+            Container(
+              margin: const EdgeInsets.only(top: 25, left: 25, right: 25),
+              child: TextField(
+                controller: titelControl,
+                decoration: InputDecoration(
+                  labelText: 'Titel',
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(25)
+                  )
                 ),
-                child: Text("Gem"),
-                onPressed: opretTodo,
+              ),
+            ),
+            Container(
+              margin: const EdgeInsets.only(top: 25, left: 25, right: 25),
+              child: TextField(
+                controller: beskrivelsesControl,
+                maxLines: null,
+                keyboardType: TextInputType.multiline,
+                decoration: InputDecoration(
+                  labelText: 'Beskrivelse',
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(25)
+                  )
+                ),
+              ),
+            ),
+            Container(
+              margin: const EdgeInsets.only(top: 25, left: 50, right: 50),
+              child: ButtonTheme(
+                minWidth: double.infinity,
+                height: 50,
+                child: RaisedButton(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(25))
+                  ),
+                  child: Text("Gem"),
+                  onPressed: opretTodo,
+                ),
               ),
             )
           ],
