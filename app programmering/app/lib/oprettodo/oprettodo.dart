@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:scoped_model/scoped_model.dart';
+import 'package:app/todoelement.dart';
 
 class OpretTodo extends StatefulWidget{
 
@@ -17,6 +19,13 @@ class _OpretTodo extends State{
     titelControl.dispose();
     beskrivelsesControl.dispose();
     super.dispose();
+  }
+
+  void opretTodo(){
+    TodoScope scope = ScopedModel.of<TodoScope>(context);
+    TodoData td = TodoData(titelControl.text, beskrivelsesControl.text);
+    scope.todolist.add(td);
+    Navigator.pop(context);
   }
 
   @override
@@ -43,7 +52,7 @@ class _OpretTodo extends State{
               ),
             ),
             FlatButton(
-              onPressed: null,
+              onPressed: opretTodo,
               child: Text("Gem"),
             )
           ],

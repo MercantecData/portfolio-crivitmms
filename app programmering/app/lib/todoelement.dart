@@ -4,7 +4,7 @@ import 'package:scoped_model/scoped_model.dart';
 
 class TodoScope extends Model{
 
-  List<TodoData> todolist;
+  List<TodoData> todolist = List<TodoData>();
 
 }
 
