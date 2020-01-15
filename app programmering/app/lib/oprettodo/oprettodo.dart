@@ -57,7 +57,10 @@ class _OpretTodo extends State{
             TextField(
               controller: titelControl,
               decoration: InputDecoration(
-                labelText: 'Titel'
+                labelText: 'Titel',
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(25)
+                )
               ),
             ),
             TextField(
@@ -65,12 +68,22 @@ class _OpretTodo extends State{
               maxLines: null,
               keyboardType: TextInputType.multiline,
               decoration: InputDecoration(
-                labelText: 'Beskrivelse'
+                labelText: 'Beskrivelse',
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(25)
+                )
               ),
             ),
-            FlatButton(
-              onPressed: opretTodo,
-              child: Text("Gem"),
+            ButtonTheme(
+              minWidth: double.infinity,
+              height: 50,
+              child: RaisedButton(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(25))
+                ),
+                child: Text("Gem"),
+                onPressed: opretTodo,
+              ),
             )
           ],
         ),
