@@ -1,9 +1,21 @@
 import 'package:flutter/material.dart';
 import 'todoelement.dart';
 import 'oprettodo/oprettodo.dart';
+import 'package:scoped_model/scoped_model.dart';
 
 
-void main() => runApp(MyApp());
+
+void main(){
+  
+  TodoScope todoScope = TodoScope();
+
+  runApp(
+    ScopedModel<TodoScope>(
+      model: todoScope,
+      child: MyApp(),
+    )
+  );
+}
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
