@@ -13,6 +13,8 @@ class _OpretTodo extends State{
 
   final titelControl = TextEditingController();
   final beskrivelsesControl = TextEditingController();
+  bool fejlBeskedBool = false;
+  String fejlBesked = "";
 
   @override
   void dispose(){
@@ -22,10 +24,24 @@ class _OpretTodo extends State{
   }
 
   void opretTodo(){
-    TodoScope scope = ScopedModel.of<TodoScope>(context);
-    TodoData td = TodoData(titelControl.text, beskrivelsesControl.text);
-    scope.todolist.add(td);
-    Navigator.pop(context);
+    if (titelControl.text.length <= 3) {
+      setState(() {
+        fejlBesked = "Angiv en titel på mere end 3 tegn";
+        fejlBeskedBool = true;
+      });
+    }else{
+      TodoScope scope = ScopedModel.of<TodoScope>(context);
+      TodoData td = TodoData(titelControl.text, beskrivelsesControl.text);
+      scope.todolist.add(td);
+      Navigator.pop(context);
+    }
+  }
+
+  Widget fejlBeskedWidget(){
+    if (fejlBeskedBool) {
+      return Text(fejlBesked);
+    }
+    return Container();
   }
 
   @override
@@ -37,6 +53,7 @@ class _OpretTodo extends State{
       body: Container(
         child: Column(
           children: <Widget>[
+            fejlBeskedWidget(),
             TextField(
               controller: titelControl,
               decoration: InputDecoration(
