@@ -17,7 +17,10 @@ class TodoData{
 class TodoElement extends StatefulWidget{
 
   final TodoData todoData;
-  const TodoElement({Key key, this.todoData}): super(key: key);
+  final int index;
+  final Function update;
+
+  const TodoElement({Key key, this.todoData, this.index, this.update}): super(key: key);
 
   @override
   _TodoElement createState() => _TodoElement();
@@ -27,12 +30,19 @@ class _TodoElement extends State<TodoElement>{
 
   Color color = Colors.blueAccent;
 
+  void delete(){
+    Navigator.of(context).pop();
+    ScopedModel.of<TodoScope>(context).todolist.removeAt(widget.index);
+    widget.update();
+  }
+
   void popup(){
     showDialog(
       context: context,
       builder: (BuildContext context) => popupside(
-        context: context, 
-        todoData: widget.todoData
+        context, 
+        widget.todoData,
+        delete
       ),
     );
   }
@@ -62,12 +72,16 @@ class _TodoElement extends State<TodoElement>{
   }
 }
 
-Widget popupside({@required BuildContext context, TodoData todoData}) {
+Widget popupside(BuildContext context, TodoData todoData, Function funck) {
 
   return AlertDialog(
     title: Row(
       children: <Widget>[
         Text(todoData.titel),
+        FlatButton(
+          onPressed: funck,
+          child: Text("Fjern"),
+        )
       ],
     ),
     content: Column(

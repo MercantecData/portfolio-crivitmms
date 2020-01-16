@@ -3,6 +3,8 @@ import 'package:scoped_model/scoped_model.dart';
 import 'package:app/todoelement.dart';
 
 class TodoList extends StatefulWidget{
+  TodoList(this.update);
+  final Function update;
 
   @override
   State<StatefulWidget> createState() {
@@ -10,16 +12,17 @@ class TodoList extends StatefulWidget{
   }
 }
 
-class _TodoList extends State{
-
+class _TodoList extends State<TodoList>{
 
   @override
   Widget build(BuildContext context) {
-    List<TodoData> todoList = ScopedModel.of<TodoScope>(context).todolist;
+    final List<TodoData> todoList = ScopedModel.of<TodoScope>(context).todolist;
     List<TodoElement> elemtenList = List<TodoElement>();
-    for (TodoData item in todoList) {
-      elemtenList.add(TodoElement(todoData: item));
-    }
+    final Function update = widget.update;
+
+    todoList.asMap().forEach(
+      (index, value) => elemtenList.add(TodoElement(todoData: value,index: index,))
+    );
 
     return ListView(
       children: elemtenList,

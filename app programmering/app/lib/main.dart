@@ -40,6 +40,20 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
 
+  Widget todoList;
+
+  @override
+  void initState() {
+    todoList = TodoList(update);
+    super.initState();
+  }
+
+  void update(){
+    setState(() {
+      todoList = TodoList(update);
+    });
+  }
+
   void navigate(){
     Navigator.push(
       context, 
@@ -54,7 +68,7 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text("Todo"),
       ),
       body: Center(
-        child: TodoList(),
+        child: todoList,
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: navigate,
