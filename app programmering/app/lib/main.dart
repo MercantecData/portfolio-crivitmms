@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'todoelement.dart';
 import 'oprettodo/oprettodo.dart';
 import 'package:scoped_model/scoped_model.dart';
-
+import 'todolist.dart';
 
 
 void main(){
@@ -54,12 +54,7 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text("Todo"),
       ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-
-          ],
-        ),
+        child: TodoList(),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: navigate,
