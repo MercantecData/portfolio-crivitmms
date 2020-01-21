@@ -1,6 +1,6 @@
+import 'package:app/todoelement.dart';
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
-import 'package:app/todoelement.dart';
 
 class OpretTodo extends StatefulWidget{
 
@@ -30,9 +30,9 @@ class _OpretTodo extends State{
         fejlBeskedBool = true;
       });
     }else{
-      TodoScope scope = ScopedModel.of<TodoScope>(context);
-      TodoData td = TodoData(titelControl.text, beskrivelsesControl.text);
-      scope.todolist.add(td);
+      TodoElement td = TodoElement(titel: titelControl.text, beskrivelse: beskrivelsesControl.text,);
+      ScopedModel.of<TodoScope>(context).todolist.add(td);
+      ScopedModel.of<TodoScope>(context).update();
       Navigator.pop(context);
     }
   }

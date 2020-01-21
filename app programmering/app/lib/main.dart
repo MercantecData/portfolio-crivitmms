@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'todoelement.dart';
-import 'oprettodo/oprettodo.dart';
+import 'oprettodo.dart';
 import 'package:scoped_model/scoped_model.dart';
-
 
 
 void main(){
@@ -44,7 +43,34 @@ class _MyHomePageState extends State<MyHomePage> {
     Navigator.push(
       context, 
       MaterialPageRoute(builder: (context) => OpretTodo())
-      );
+    );
+  }
+
+  void update(){
+    setState(() {
+      List<Widget> newlist = new List();
+      _todolist.asMap().forEach(
+        (index, value){
+          newlist.add(value);
+        });
+      list = ListView(children: newlist ?? [Text("ingen todo")]);
+    });
+  }
+
+  List<Widget> _todolist;
+  ListView list;
+
+  @override
+  void initState() {
+    ScopedModel.of<TodoScope>(context).addListener(update);
+    _todolist = ScopedModel.of<TodoScope>(context).todolist;
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    ScopedModel.of<TodoScope>(context).removeListener(update);
+    super.dispose();
   }
 
   @override
@@ -54,12 +80,7 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text("Todo"),
       ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-
-          ],
-        ),
+        child: list ?? Text("ingen todo"),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: navigate,

@@ -1,62 +1,100 @@
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
 
-
 class TodoScope extends Model{
+  List<TodoElement> todolist = List<TodoElement>();
 
-  List<TodoData> todolist = List<TodoData>();
-
-}
-
-class TodoData{
-
-  String _titel;
-  String _beskrivelse;
-
-  TodoData(this._titel, this._beskrivelse);
-
-  void editTitel(String str){
-    _titel = str;
-  }
-
-  void editBeskrivelse(String str){
-    _beskrivelse = str;
-  }
-
-  String getTitel(){
-    return _titel;
-  }
-
-  String getBeskrivelse(){
-    return _beskrivelse;
+  void update(){
+    notifyListeners();
   }
 
 }
 
 class TodoElement extends StatefulWidget{
 
-  const TodoElement({Key key, this.todoData}): super(key: key);
-  final TodoData todoData;
+  final String titel;
+  final String beskrivelse;
+  final bool isDone = false;
+
+  TodoElement({Key key, this.beskrivelse, this.titel}): super(key: key);
 
   @override
   _TodoElement createState() => _TodoElement();
 }
 
-
 class _TodoElement extends State<TodoElement>{
+  static const Color color = Colors.blueAccent;
 
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: ListView(
-        children: <Widget>[
-          Text(widget.todoData.getTitel()),
-          Text(widget.todoData.getBeskrivelse())
-        ],
+  void fjern(){
+    ScopedModel.of<TodoScope>(context).todolist.removeWhere((item) => item.hashCode == widget.hashCode);
+    ScopedModel.of<TodoScope>(context).update();
+    Navigator.of(context).pop();
+  }
+
+  void popup(){
+    showDialog(
+      context: context,
+      builder: (BuildContext context) => popupside(
+        context, 
+        widget.titel,
+        widget.beskrivelse,
+        fjern
       ),
     );
   }
 
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: InkWell(
+        onTap: popup,
+        child: Container(
+          margin: const EdgeInsets.only(left: 20, right: 20, top: 2, bottom: 2),
+          padding: const EdgeInsets.all(15),
+          decoration: BoxDecoration(
+            border: Border.all(
+              color: color,
+              width: 2
+            ),
+            borderRadius: BorderRadius.all(Radius.circular(15)),
+          ),
+          child: Text(
+            widget.titel,
+            textAlign: TextAlign.center,
+          ),
+        ),
+      )
+    );
+  }
 }
 
+Widget popupside(BuildContext context, String titel, String beskrivelse, Function fjern) {
 
+  return AlertDialog(
+    title: Row(
+      children: <Widget>[
+        Text(titel),
+        FlatButton(
+          onPressed: fjern,
+          child: Text("Fjern"),
+        )
+      ],
+    ),
+    content: Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Text(beskrivelse)
+      ],
+    ),
+    actions: <Widget>[
+      FlatButton(
+        onPressed: () {
+          Navigator.of(context).pop();
+        },
+        textColor: Theme.of(context).primaryColor,
+        child: const Text("Tilbage"),
+      )
+    ],
+  );
+}
