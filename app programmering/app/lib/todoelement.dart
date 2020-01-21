@@ -5,11 +5,6 @@ class TodoScope extends Model{
   List<TodoElement> todolist = List<TodoElement>();
 
   void update(){
-    todolist.asMap().forEach(
-      (index,value){
-        todolist[index].index = index;
-      }
-    );
     notifyListeners();
   }
 
@@ -20,8 +15,6 @@ class TodoElement extends StatefulWidget{
   final String titel;
   final String beskrivelse;
   final bool isDone = false;
-  int index;
-  
 
   TodoElement({Key key, this.beskrivelse, this.titel}): super(key: key);
 
@@ -33,7 +26,7 @@ class _TodoElement extends State<TodoElement>{
   static const Color color = Colors.blueAccent;
 
   void fjern(){
-    ScopedModel.of<TodoScope>(context).todolist.removeAt(widget.index);
+    ScopedModel.of<TodoScope>(context).todolist.removeWhere((item) => item.hashCode == widget.hashCode);
     ScopedModel.of<TodoScope>(context).update();
     Navigator.of(context).pop();
   }
