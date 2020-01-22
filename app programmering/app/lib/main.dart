@@ -17,7 +17,7 @@ void main(){
 }
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -33,6 +33,7 @@ class MyApp extends StatelessWidget {
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key}) : super(key: key);
 
+
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
@@ -47,6 +48,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void update(){
+    _todolist = ScopedModel.of<TodoScope>(context).todolist; 
     setState(() {
       List<Widget> newlist = new List();
       _todolist.asMap().forEach(
@@ -62,8 +64,9 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   void initState() {
+    ScopedModel.of<TodoScope>(context).load();
     ScopedModel.of<TodoScope>(context).addListener(update);
-    _todolist = ScopedModel.of<TodoScope>(context).todolist;
+    _todolist = ScopedModel.of<TodoScope>(context).todolist; 
     super.initState();
   }
 
