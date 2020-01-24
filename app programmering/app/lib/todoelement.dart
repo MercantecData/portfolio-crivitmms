@@ -11,6 +11,7 @@ class TodoScope extends Model{
   TodoScope();
 
   void update(){
+    save();
     notifyListeners();
   }
 
@@ -74,12 +75,40 @@ class TodoElement extends StatefulWidget{
 }
 
 class _TodoElement extends State<TodoElement>{
-  static const Color color = Colors.blueAccent;
+  //static const Color color = Colors.blueAccent;
+
+  Color get color{
+    if (widget.isDone) {
+      return Colors.greenAccent;
+    } else {
+      return Colors.blueAccent;
+    }
+  }
+
+  void changestate(){
+
+    ScopedModel.of<TodoScope>(context).todolist.asMap().forEach(
+      (index, value){
+        if (widget.hashCode == value.hashCode) {
+          ScopedModel.of<TodoScope>(context).todolist.replaceRange(
+            index, 
+            index, 
+            [TodoElement(
+              beskrivelse: widget.beskrivelse,
+              titel: widget.titel,
+              isDone: !widget.isDone,
+            )]
+          );
+        }
+      }
+    );
+    ScopedModel.of<TodoScope>(context).update();
+
+  }
 
   void fjern(){
     ScopedModel.of<TodoScope>(context).todolist.removeWhere((item) => item.hashCode == widget.hashCode);
     ScopedModel.of<TodoScope>(context).update();
-    ScopedModel.of<TodoScope>(context).save();
     Navigator.of(context).pop();
   }
 
@@ -100,6 +129,7 @@ class _TodoElement extends State<TodoElement>{
     return Container(
       child: InkWell(
         onTap: popup,
+        onLongPress: changestate,
         child: Container(
           margin: const EdgeInsets.only(left: 20, right: 20, top: 2, bottom: 2),
           padding: const EdgeInsets.all(15),
