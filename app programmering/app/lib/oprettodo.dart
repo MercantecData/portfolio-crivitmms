@@ -33,7 +33,6 @@ class _OpretTodo extends State{
       TodoElement td = TodoElement(titel: titelControl.text, beskrivelse: beskrivelsesControl.text,);
       ScopedModel.of<TodoScope>(context).todolist.add(td);
       ScopedModel.of<TodoScope>(context).update();
-      ScopedModel.of<TodoScope>(context).save();
       Navigator.pop(context);
     }
   }

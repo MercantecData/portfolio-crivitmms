@@ -50,16 +50,22 @@ class _MyHomePageState extends State<MyHomePage> {
   void update(){
     _todolist = ScopedModel.of<TodoScope>(context).todolist; 
     setState(() {
-      List<Widget> newlist = new List();
+      List<TodoElement> newlist = new List();
+      List<TodoElement> newdonelist = new List();
       _todolist.asMap().forEach(
         (index, value){
-          newlist.add(value);
+          if (value.isDone) {
+            newdonelist.add(value);
+          } else {
+            newlist.add(value);
+          }
         });
+      newlist.addAll(newdonelist);
       list = ListView(children: newlist ?? [Text("ingen todo")]);
     });
   }
 
-  List<Widget> _todolist;
+  List<TodoElement> _todolist;
   ListView list;
 
   @override
