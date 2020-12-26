@@ -1,2 +1,1 @@
 portfolio
-Morten M. Smed
